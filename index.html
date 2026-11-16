@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>경쟁사 메타 광고</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <meta name="robots" content="noindex">
+  <style>/* 관제탑(A안) 디자인 시스템 — design/Main.dc.html 과 동일한 토큰 */
+:root {
+  --bg: #131412; --rail: #0d0e0c; --line: #26261f; --panel2: #1d1f1a; --sunk: #0d0e0c;
+  --ink: #f2f1ea; --ink2: #a3a49a; --ink3: #6e6f66; --ink4: #4f5049; --ink5: #3d3e35;
+  --blue: #3987e5; --blue2: #2b4f7a; --green: #199e70; --green-bg: #132019;
+  --ours: #d95926; --ours-bg: #1c1512; --ours-ink3: #8a6a58;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+  font-family: 'IBM Plex Sans KR', 'Malgun Gothic', system-ui, sans-serif; font-size: 12px; }
+a { color: var(--blue); text-decoration: none; } a:hover { color: #6aa6ee; }
+.mono { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-variant-numeric: tabular-nums; }
+
+.layout { display: flex; min-height: 100vh; }
+
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 24px; border-bottom: 1px solid var(--line); }
+.topbar h1 { font-size: 15px; font-weight: 600; letter-spacing: -.2px; margin: 0; }
+.topbar .meta { font-size: 11px; color: var(--ink3); margin-left: 14px; }
+.segs { display: flex; gap: 5px; }
+.seg { font-size: 11px; padding: 5px 11px; border-radius: 6px; border: 1px solid var(--line); color: var(--ink3); cursor: pointer; white-space: nowrap; background: none; font-family: inherit; }
+.seg.on { border-color: var(--green); background: var(--green-bg); color: var(--green); font-weight: 500; }
+
+.grid { flex: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: auto 1fr auto; gap: 1px; background: var(--line); }
+.panel { background: var(--bg); padding: 20px 24px; min-width: 0; }
+.span2 { grid-column: span 2; } .rows2 { grid-row: span 2; }
+.cap { font-size: 10px; letter-spacing: 1.2px; color: var(--ink3); text-transform: uppercase; }
+.h { font-size: 13px; font-weight: 600; }
+.hero { font-size: 46px; font-weight: 600; letter-spacing: -1.5px; line-height: 1; }
+.hero small, .big small { color: var(--ink2); }
+.hero small { font-size: 24px; } .big { font-size: 26px; font-weight: 600; letter-spacing: -.8px; } .big small { font-size: 15px; }
+.up { color: var(--green); } .down { color: #e66767; }
+.note { font-size: 11px; color: var(--ink2); margin-top: 6px; line-height: 1.45; }
+.foot { font-size: 10px; color: var(--ink4); border-top: 1px solid var(--line); padding-top: 10px; margin-top: 8px; line-height: 1.55; }
+
+.brow { display: flex; align-items: center; gap: 12px; }
+.brow .name { width: 78px; font-size: 12px; }
+.bar { flex: 1; height: 13px; background: var(--panel2); border-radius: 0 4px 4px 0; }
+.bar i { display: block; height: 100%; background: var(--blue); border-radius: 0 4px 4px 0; }
+.brow .amt { width: 62px; text-align: right; font-size: 12px; font-weight: 500; }
+.brow .cnt { width: 38px; text-align: right; font-size: 10px; color: var(--ink3); }
+.brow.ours { padding: 7px 8px; margin: 0 -8px; background: var(--ours-bg); border-radius: 6px; }
+.brow.ours .name, .brow.ours .amt { color: var(--ours); font-weight: 600; } .brow.ours .bar i { background: var(--ours); }
+.brow.zero .name, .brow.zero .amt { color: var(--ink4); }
+.brow.etc { cursor: pointer; } .brow.etc .name { color: var(--ink2); } .brow.etc .bar i { background: var(--ink3); }
+.etcbox { margin: 0 0 4px 78px; padding: 9px 12px; background: var(--sunk); border: 1px solid var(--line); border-radius: 6px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11px; }
+.etcbox b { font-weight: 400; color: var(--ink2); } .etcbox small { color: var(--ink4); font-size: 10px; }
+
+.cols { display: flex; align-items: flex-end; gap: 22px; height: 150px; margin-top: 18px; }
+.col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 7px; height: 100%; }
+.col i { display: block; width: 100%; background: var(--blue); border-radius: 4px 4px 0 0; }
+.col.partial i { background: var(--line); border: 1px dashed var(--ink5); border-bottom: none; }
+.col .v { font-size: 11px; color: var(--ink2); } .col .m { font-size: 10px; color: var(--ink3); }
+
+.hrow { display: flex; align-items: center; gap: 9px; }
+.hrow .lab { width: 28px; font-size: 11px; color: var(--ink2); } .hrow .bar { height: 11px; } .hrow .bar i { background: var(--green); }
+.hrow .amt { width: 44px; text-align: right; font-size: 10px; }
+.stack { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+.loading { color: var(--ink3); font-size: 11px; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span2 { grid-column: span 2; } }
+</style>
+  <style>
+    .bar2 { display:flex; flex-wrap:wrap; gap:6px; padding:12px 24px; border-bottom:1px solid var(--line); align-items:center; }
+    .bar2 .lab { font-size:10px; color:var(--ink3); letter-spacing:1px; margin-right:4px; }
+    .seg small { color:var(--ink4); margin-left:4px; }
+    .seg.on small { color:var(--green); opacity:.7; }
+    .seg.ours { border-color:var(--ours-ink3); color:var(--ours); }
+    .seg.ours.on { background:var(--ours-bg); border-color:var(--ours); }
+    .wrap { padding:20px 24px 40px; display:flex; flex-direction:column; gap:22px; }
+    .ins { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .ins > div { background:var(--bg); padding:16px 20px; }
+    .ins ul { margin:10px 0 0; padding-left:18px; line-height:1.7; font-size:12px; color:var(--ink2); }
+    .ins ul b { color:var(--ink); font-weight:600; }
+    .hrow .lab { width:92px; } .hrow .amt { width:70px; color:var(--ink2); }
+    .ftbl { display:grid; margin-top:10px; font-size:11px; }
+    .ftbl > div { padding:5px 6px; border-bottom:1px solid var(--panel2); text-align:right; }
+    .ftbl > .l { text-align:left; } .ftbl > .th { font-size:10px; color:var(--ink3); border-bottom-color:var(--line); }
+    .ftbl .z { color:var(--ink5); }
+    .sec h2 { font-size:13px; font-weight:600; margin:0 0 4px; display:flex; gap:10px; align-items:baseline; }
+    .sec h2 small { font-size:11px; color:var(--ink3); font-weight:400; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:12px; margin-top:10px; }
+    .ad { background:var(--panel2); border:1px solid var(--line); border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+    .ad .img { position:relative; aspect-ratio:1/1; overflow:hidden; background:var(--sunk); }
+    .ad .img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .ad .img .tag { position:absolute; top:7px; left:7px; font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(13,14,12,.85); color:var(--ink); }
+    .ad .img .days { left:auto; right:7px; }
+    .ad .img .days.long { background:var(--green); color:#06140d; font-weight:600; }
+    .ad .bd { padding:10px 12px 12px; display:flex; flex-direction:column; gap:6px; flex:1; }
+    .ad .who { font-size:11px; color:var(--ink3); display:flex; justify-content:space-between; gap:6px; }
+    .ad .who b { color:var(--ink); font-weight:600; }
+    .ad .t { font-size:12px; font-weight:600; line-height:1.4; }
+    .ad .tx { font-size:11px; color:var(--ink2); line-height:1.5; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden; white-space:pre-line; }
+    .ad .ap { display:flex; flex-wrap:wrap; gap:4px; margin-top:auto; padding-top:4px; }
+    .ad .ap i { font-style:normal; font-size:10px; padding:2px 6px; border-radius:4px; background:var(--bg); color:var(--ink2); border:1px solid var(--line); }
+    .ad .lk { font-size:11px; }
+    .empty { color:var(--ink3); font-size:12px; padding:8px 0; }
+    @media (max-width: 900px) { .ins { grid-template-columns:1fr; } .wrap, .bar2 { padding-left:16px; padding-right:16px; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:baseline;flex-wrap:wrap">
+        <h1>경쟁사 메타 광고</h1>
+        <span class="meta mono" id="meta">불러오는 중…</span>
+      </div>
+      <div class="segs" id="view">
+        <button class="seg on" data-v="brand">브랜드별</button>
+        <button class="seg" data-v="long">오래 켜둔 광고</button>
+      </div>
+    </div>
+    <div class="bar2" id="cats"></div>
+    <div class="bar2" id="brands"></div>
+    <div class="wrap">
+      <section class="ins" id="ins"></section>
+      <div id="list"></div>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
